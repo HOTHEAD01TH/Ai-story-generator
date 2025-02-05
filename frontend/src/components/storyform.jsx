@@ -15,8 +15,8 @@ function StoryForm({ addStoryPart, setCurrentPart }) {
       return imageRes.data.image_url;
     } catch (err) {
       if (err.response?.data?.retry && retryCount < 3) {
-        // Wait 2 seconds before retrying
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, err.response.data.retryAfter || 5000));
         return generateImage(description, retryCount + 1);
       }
       throw err;
